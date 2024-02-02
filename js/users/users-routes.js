@@ -4,6 +4,6 @@ const users = require('./users.js');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', users.getUsersWithRegisteredCard);
+router.post('/', users.registerUser);
 
 module.exports = router;
