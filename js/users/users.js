@@ -9,7 +9,11 @@ exports.getUsersWithRegisteredCard = (req, res) => {
     //if user is under age 18 then reject with code 403
     if(calculateAge(data.dob) < 18) return res.sendStatus(403);
 
+    //if username already exists then reject with code 409
     const existingUsers = queryUsers();
+    if(existingUsers.map((user) => {return user.username}).includes(data.username)) return res.sendStatus(409);
+
+    return res.sendStatus(201);
 }
 
 function validateRequest(data){
