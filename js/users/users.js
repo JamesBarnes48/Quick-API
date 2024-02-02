@@ -72,3 +72,7 @@ function queryUsers(){
         }
     ]
 }
+
+exports.getUserInfo = (req, res) => {
+    //
+}
