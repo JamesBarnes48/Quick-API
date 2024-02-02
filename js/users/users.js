@@ -2,9 +2,12 @@ exports = module.exports = function(){
     return exports;
 }
 
-exports.getUsersWithRegisteredCard = (req, res, next) => {
+exports.getUsersWithRegisteredCard = (req, res) => {
     const data = parseRequest(req.body);
-    if(!validateRequest(data)) console.log('failed');
+    if(!validateRequest(data)) return res.sendStatus(400);
+
+    //if user is under age 18 then reject with code 403
+    if(calculateAge(data.dob) < 18) return res.sendStatus(403);
 }
 
 function validateRequest(data){
@@ -24,6 +27,11 @@ function parseRequest(inputData){
         dob: new Date(inputData.dob)? new Date(inputData.dob).toISOString().split('T')[0] || '': '',
         creditCard: +inputData.creditCard || 0
     };
+}
+
+//3.15576e+10 milliseconds in a year
+function calculateAge(dob){
+    return Math.floor((new Date() - new Date(dob).getTime()) / 3.15576e+10)
 }
 
 function hasUpperCase(str){
