@@ -1,0 +1,1 @@
+const payments = require('./payments.js');
