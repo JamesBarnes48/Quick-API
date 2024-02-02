@@ -2,7 +2,7 @@ const express = require('express');
 const usersRoutes = require('./users/users-routes.js');
 const paymentsRoutes = require('./payments/payments-routes.js');
 
-//configure express to listen on port
+//configure express and listen on port
 const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
