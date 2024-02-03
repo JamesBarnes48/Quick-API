@@ -17,9 +17,9 @@ exports.registerUser = (req, res) => {
 }
 
 function validateRegisterRequest(data){
-    if(!data.username.length || !(/^[a-zA-Z0-9]+$/.test(data.username))) return false;
+    if(!(/^[a-zA-Z0-9]+$/.test(data.username))) return false;
     if(data.password.length < 8 || !hasLowerCase(data.password) || !hasUpperCase(data.password) || !hasNumber(data.password)) return false;
-    if(!data.email.length || !data.email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) return false;
+    if(!data.email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) return false;
     if(!data.dob.length) return false;
     if(data.creditCard && String(data.creditCard)?.length !== 16) return false;
     return true;

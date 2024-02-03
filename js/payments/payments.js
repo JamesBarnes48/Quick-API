@@ -13,3 +13,9 @@ function parsePayment(inputData){
         amount: +inputData.amount || null
     };
 }
+
+function validatePayment(data){
+    if(String(data.creditCard)?.length !== 16) return false;
+    if(String(data.amount)?.length !== 3) return false;
+    return true;
+}
