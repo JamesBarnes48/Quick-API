@@ -17,7 +17,7 @@ exports.queryUsers = () => {
             password: "MyPassword55",
             email: "andrew@gmail.com",
             dob: "1996-10-25",
-            creditCard: 123475489654678
+            creditCard: 1234754896546784
         }
     ]
 }

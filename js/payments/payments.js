@@ -1,3 +1,5 @@
+const database = require('../database.js')
+
 exports = module.exports = function(){
     return exports;
 }
@@ -5,6 +7,15 @@ exports = module.exports = function(){
 exports.post = (req, res) => {
     const data = parsePayment(req.body);
     if(!validatePayment(data)) return res.sendStatus(400); 
+
+    const users = database.queryUsers();
+    const matchingUser = users.find((user) => {return +user.creditCard === +data.creditCard});
+    if(matchingUser){
+        //make payment
+        return res.sendStatus(201);
+    }else{
+        return res.sendStatus(404);
+    }
 }
 
 function parsePayment(inputData){
