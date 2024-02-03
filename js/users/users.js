@@ -3,7 +3,7 @@ exports = module.exports = function(){
 }
 
 exports.registerUser = (req, res) => {
-    const data = parseRegisterBody(req.body);
+    const data = parseRegistration(req.body);
     if(!validateRegisterRequest(data)) return res.sendStatus(400);
 
     //if user is under age 18 then reject with code 403
@@ -25,7 +25,7 @@ function validateRegisterRequest(data){
     return true;
 }
 
-function parseRegisterBody(inputData){
+function parseRegistration(inputData){
     return {
         username: String(inputData.username).replace(/\s/g, "") || '',
         password: inputData.password || '',
@@ -53,7 +53,7 @@ function hasNumber(str){
     return /\d/.test(str);
 }
 
-exports.getUserInfo = (req, res) => {
+exports.get = (req, res) => {
     switch(req.body.CreditCard){
         case "Yes":
             return res.json(queryUsers().filter((user) => {return !!user.creditCard}));
