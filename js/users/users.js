@@ -53,6 +53,17 @@ function hasNumber(str){
     return /\d/.test(str);
 }
 
+exports.getUserInfo = (req, res) => {
+    switch(req.body.CreditCard){
+        case "Yes":
+            return res.json(queryUsers().filter((user) => {return !!user.creditCard}));
+        case "No":
+            return res.json(queryUsers().filter((user) => {return !user.creditCard}));
+        default: 
+            return res.json(queryUsers());
+    }
+}
+
 //MOCK DATABASE
 function queryUsers(){
     return [
@@ -71,8 +82,4 @@ function queryUsers(){
             creditCard: 123475489654678
         }
     ]
-}
-
-exports.getUserInfo = (req, res) => {
-    //
 }
