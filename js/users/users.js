@@ -1,3 +1,5 @@
+const database = require('../database.js');
+
 exports = module.exports = function(){
     return exports;
 }
@@ -10,7 +12,7 @@ exports.registerUser = (req, res) => {
     if(calculateAge(data.dob) < 18) return res.sendStatus(403);
 
     //if username already exists then reject with code 409
-    const existingUsers = queryUsers();
+    const existingUsers = database.queryUsers();
     if(existingUsers.map((user) => {return user.username}).includes(data.username)) return res.sendStatus(409);
 
     return res.sendStatus(201);
@@ -56,30 +58,10 @@ function hasNumber(str){
 exports.get = (req, res) => {
     switch(req.body.CreditCard){
         case "Yes":
-            return res.json(queryUsers().filter((user) => {return !!user.creditCard}));
+            return res.json(database.queryUsers().filter((user) => {return !!user.creditCard}));
         case "No":
-            return res.json(queryUsers().filter((user) => {return !user.creditCard}));
+            return res.json(database.queryUsers().filter((user) => {return !user.creditCard}));
         default: 
-            return res.json(queryUsers());
+            return res.json(database.queryUsers());
     }
-}
-
-//MOCK DATABASE
-function queryUsers(){
-    return [
-        {
-            username: "JohnSmith26",
-            password: "smithyPASSWORD25",
-            email: "john@smith.com",
-            dob: "2000-10-25",
-            creditCard: null
-        },
-        {
-            username: "AndrewGod",
-            password: "MyPassword55",
-            email: "andrew@gmail.com",
-            dob: "1996-10-25",
-            creditCard: 123475489654678
-        }
-    ]
 }
