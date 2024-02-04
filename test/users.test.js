@@ -1,6 +1,6 @@
 const request = require('supertest');
 const chai = require('chai');
-const should = chai.should(), expect = chai.expect();
+const should = chai.should();
 
 describe('GET /users', () => {
   let usersWithCards, usersWithoutCards, allUsers;
