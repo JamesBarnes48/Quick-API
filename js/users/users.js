@@ -58,10 +58,10 @@ function hasNumber(str){
 exports.get = (req, res) => {
     switch(req.body.CreditCard){
         case "Yes":
-            return res.json(database.queryUsers().filter((user) => {return !!user.creditCard}));
+            return res.json({users: database.queryUsers().filter((user) => {return !!user.creditCard})});
         case "No":
-            return res.json(database.queryUsers().filter((user) => {return !user.creditCard}));
+            return res.json({users: database.queryUsers().filter((user) => {return !user.creditCard})});
         default: 
-            return res.json(database.queryUsers());
+            return res.json({users: database.queryUsers()});
     }
 }
