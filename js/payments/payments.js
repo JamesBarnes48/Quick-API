@@ -11,7 +11,7 @@ exports.post = (req, res) => {
     const users = database.queryUsers();
     const matchingUser = users.find((user) => {return +user.creditCard === +data.creditCard});
     if(matchingUser){
-        //make payment
+        //successful payment
         return res.sendStatus(201);
     }else{
         return res.sendStatus(404);
