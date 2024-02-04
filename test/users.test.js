@@ -33,3 +33,82 @@ describe('GET /users', () => {
       (usersWithCards + usersWithoutCards).should.be.equal(allUsers);
     })
 });
+
+describe('POST /users', () => {
+  let testUser = {
+    username: "johnny boy22",
+    password: "PasswOrd22",
+    email: "johnny@gmail.com",
+    dob: "2005-02-01"
+  };
+
+  it('Register a valid user without a credit card', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send(testUser)
+        .expect(201)
+  });
+
+  it('Register a valid user with a credit card', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send({...testUser, creditCard: 1234567898765434})
+        .expect(201)
+  });
+
+  it('Register a user with an invalid password', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send({...testUser, password: 'password'})
+        .expect(400)
+  });
+
+  it('Register a user with an invalid email', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send({...testUser, email: 'mail.com'})
+        .expect(400)
+  });
+
+  it('Register a user under age 18', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send({...testUser, dob: "2020-01-20"})
+        .expect(403)
+  });
+
+  it('Register a user using a valid epoch timestamp date of birth', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send({...testUser, dob: 1007066467901})
+        .expect(201)
+  });
+
+  it('Register a user using an invalid credit card', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send({...testUser, creditCard: 23})
+        .expect(400)
+  });
+
+  it('Register a user using a non-numeric credit card (should default to no credit card)', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send({...testUser, creditCard: 'oops'})
+        .expect(201)
+  });
+
+  it('Register a user who already exists', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send({...testUser, username: 'AndrewGod'})
+        .expect(409)
+  });
+  
+  it('Register a user with no information', async() => {
+    return request('http://localhost:3000')
+        .post('/users')
+        .send({})
+        .expect(400)
+  });
+})

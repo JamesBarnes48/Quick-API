@@ -32,7 +32,7 @@ function parseRegistration(inputData){
         username: String(inputData.username).replace(/\s/g, "") || '',
         password: inputData.password || '',
         email: inputData.email || '',
-        dob: new Date(inputData.dob)? new Date(inputData.dob).toISOString().split('T')[0] || '': '',
+        dob: inputData.dob? new Date(inputData.dob).toISOString().split('T')[0] || '': '',
         creditCard: +inputData.creditCard || null
     };
 }
